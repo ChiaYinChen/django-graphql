@@ -17,11 +17,11 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from strawberry.django.views import AsyncGraphQLView
 
+from core.middlewares import CustomAsyncGraphQLView
 from core.schema import schema
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("graphql/", AsyncGraphQLView.as_view(schema=schema)),
+    path("graphql/", CustomAsyncGraphQLView.as_view(schema=schema)),
 ]
