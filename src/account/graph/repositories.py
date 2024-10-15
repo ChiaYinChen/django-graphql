@@ -11,12 +11,17 @@ class CRUDUser:
 
     @classmethod
     async def get_by_email(cls, *, email: str) -> UserModel | None:
-        """Get user by email."""
+        """Retrieve a user instance based on the provided email."""
         return await UserModel.objects.filter(email=email).afirst()
+    
+    @classmethod
+    async def get_all_instance(cls) -> list[UserModel | None]:
+        """Retrieve all instances of the user model."""
+        return UserModel.objects.all()
 
     @classmethod
     async def create(cls, *, obj_in: UserCreate | dict[str, Any]) -> UserModel:
-        """Create user with email and password."""
+        """Create a new user with email and password."""
         if isinstance(obj_in, dict):
             create_data = obj_in.copy()
         else:
