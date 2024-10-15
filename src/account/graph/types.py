@@ -10,6 +10,11 @@ class UserBase:
     email: auto
 
 
+@strawberry_django.input(models.User)
+class UserCreate(UserBase):
+    password: str
+
+
 @strawberry_django.type(models.User)
 class User(UserBase):
     id: auto
