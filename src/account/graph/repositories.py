@@ -1,5 +1,6 @@
 from typing import Any
 
+from asgiref.sync import sync_to_async
 from django.contrib.auth.hashers import make_password
 
 from account.graph.types import UserCreate
@@ -13,11 +14,11 @@ class CRUDUser:
     async def get_by_email(cls, *, email: str) -> UserModel | None:
         """Retrieve a user instance based on the provided email."""
         return await UserModel.objects.filter(email=email).afirst()
-    
+
     @classmethod
     async def get_all_instance(cls) -> list[UserModel | None]:
         """Retrieve all instances of the user model."""
-        return UserModel.objects.all()
+        return await sync_to_async(list)(UserModel.objects.all())
 
     @classmethod
     async def create(cls, *, obj_in: UserCreate | dict[str, Any]) -> UserModel:
